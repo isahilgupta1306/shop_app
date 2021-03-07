@@ -6,11 +6,17 @@ import 'package:provider/provider.dart';
 //code responsible for GridView
 
 class ProductsGrid extends StatelessWidget {
+  final bool showFavs;
+
+  ProductsGrid(this.showFavs);
+
   @override
   Widget build(BuildContext context) {
     final productsData = Provider.of<Products>(
         context); //getting the context from provider package product
-    final products = productsData.items; //loaded the products
+    final products = showFavs
+        ? productsData.favoriteItems
+        : productsData.items; //loaded the products
     return GridView.builder(
       padding: const EdgeInsets.all(10),
       itemCount: products.length,
