@@ -15,10 +15,26 @@ class CartItems {
 }
 
 class Cart with ChangeNotifier {
-  Map<String, CartItems> _items;
+  Map<String, CartItems> _items = {};
 
   Map<String, CartItems> get items {
     return {..._items};
+  }
+
+  int get itemCount {
+    if (_items == null) {
+      return 0;
+    } else {
+      return _items.length;
+    }
+  }
+
+  double get totalAmount {
+    var total = 0.0;
+    _items.forEach((key, cartItem) {
+      total += cartItem.price * cartItem.quantity;
+    });
+    return total;
   }
 
   void addItem(String productId, double price, String title) {
@@ -28,8 +44,8 @@ class Cart with ChangeNotifier {
         (existingCartItem) => CartItems(
           id: existingCartItem.id,
           title: existingCartItem.title,
-          quantity: existingCartItem.quantity,
-          price: existingCartItem.price + 1,
+          quantity: existingCartItem.quantity + 1,
+          price: existingCartItem.price,
         ),
       );
     } else {
@@ -37,10 +53,21 @@ class Cart with ChangeNotifier {
           productId,
           () => CartItems(
                 id: DateTime.now().toString(),
-                title: title,
                 price: price,
                 quantity: 1,
+                title: title,
               ));
     }
+    notifyListeners();
+  }
+
+  void removeItem(String productId) {
+    _items.remove(productId);
+    notifyListeners();
+  }
+
+  void clear() {
+    _items = {};
+    notifyListeners();
   }
 }

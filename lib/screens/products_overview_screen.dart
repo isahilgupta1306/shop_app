@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import '../widgets/app_drawer.dart';
+import '../provider/cart.dart';
 import '../provider/products.dart';
 import 'package:provider/provider.dart';
 import '../widgets/products_grid.dart';
+import '../widgets/badge.dart';
+import './cart_screen.dart';
 
 enum FilterOptions {
   Favorites,
@@ -20,7 +24,7 @@ class _ProductOverviewScreenState extends State<ProductOverviewScreen> {
     final productsContainer = Provider.of<Products>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
-        title: Text('Apni Dukaan'),
+        title: Text('Dukaan'),
         actions: [
           PopupMenuButton(
             onSelected: (FilterOptions selectedValue) {
@@ -44,8 +48,21 @@ class _ProductOverviewScreenState extends State<ProductOverviewScreen> {
             ],
             icon: Icon(Icons.more_vert),
           ),
+          Consumer<Cart>(
+            builder: (_, cart, ch) => Badge(
+              child: ch,
+              value: cart.itemCount.toString(),
+            ),
+            child: IconButton(
+              icon: Icon(Icons.shopping_cart),
+              onPressed: () {
+                Navigator.of(context).pushNamed(CartScreen.routeName);
+              },
+            ),
+          )
         ],
       ),
+      drawer: AppDrawer(),
       body: ProductsGrid(_showOnlyFavorites),
     );
   }
