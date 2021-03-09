@@ -25,6 +25,7 @@ class _ProductOverviewScreenState extends State<ProductOverviewScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Dukaan'),
+        brightness: Brightness.light,
         actions: [
           PopupMenuButton(
             onSelected: (FilterOptions selectedValue) {
