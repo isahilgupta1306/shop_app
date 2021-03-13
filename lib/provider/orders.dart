@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_complete_guide/widgets/cart_item.dart';
 import './cart.dart';
 
 class OrderItem {
