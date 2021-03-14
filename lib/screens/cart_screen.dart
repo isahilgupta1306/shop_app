@@ -57,7 +57,15 @@ class CartScreen extends StatelessWidget {
             ),
           ),
           SizedBox(
-            height: 10,
+            height: 4,
+          ),
+          Text(
+            'Swipe left to remove the product',
+            textAlign: TextAlign.start,
+            style: TextStyle(color: Colors.black87),
+          ),
+          SizedBox(
+            height: 8,
           ),
           Expanded(
             child: ListView.builder(

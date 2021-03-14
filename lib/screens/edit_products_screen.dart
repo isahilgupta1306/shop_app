@@ -95,11 +95,9 @@ class _EditProductScreenState extends State<EditProductScreen> {
     }
     _form.currentState.save();
     if (_editedProduct.id != null) {
-      Provider.of<Products>(context, listen: false)
+      await Provider.of<Products>(context, listen: false)
           .updateProduct(_editedProduct.id, _editedProduct);
-      setState(() {
-        _isLoading = true;
-      });
+
       Navigator.of(context).pop();
     } else {
       try {
@@ -121,12 +119,16 @@ class _EditProductScreenState extends State<EditProductScreen> {
                         child: Text('Okay'))
                   ],
                 ));
-      } finally {
-        Navigator.of(context).pop();
-        setState(() {
-          _isLoading = true;
-        });
       }
+      // finally {
+      //   Navigator.of(context).pop();
+      //   setState(() {
+      //     _isLoading = true;
+      //   });
+      //
+      setState(() {
+        _isLoading = false;
+      });
     }
     // Navigator.of(context).pop();
   }
