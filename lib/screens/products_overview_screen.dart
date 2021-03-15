@@ -90,7 +90,9 @@ class _ProductOverviewScreenState extends State<ProductOverviewScreen> {
       drawer: AppDrawer(),
       body: _isLoading
           ? Center(
-              child: CircularProgressIndicator(),
+              child: CircularProgressIndicator(
+                valueColor: new AlwaysStoppedAnimation<Color>(Colors.purple),
+              ),
             )
           : ProductsGrid(_showOnlyFavorites),
     );

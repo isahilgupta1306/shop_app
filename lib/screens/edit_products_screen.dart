@@ -146,7 +146,10 @@ class _EditProductScreenState extends State<EditProductScreen> {
         ],
       ),
       body: _isLoading
-          ? Center(child: CircularProgressIndicator())
+          ? Center(
+              child: CircularProgressIndicator(
+              valueColor: new AlwaysStoppedAnimation<Color>(Colors.purple),
+            ))
           : Form(
               key: _form,
               child: Padding(
