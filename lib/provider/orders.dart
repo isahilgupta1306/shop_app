@@ -1,7 +1,4 @@
-import 'dart:developer';
-
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_complete_guide/widgets/cart_item.dart';
 import 'package:http/http.dart' as http;
 import './cart.dart';
 import 'dart:convert';
@@ -23,14 +20,17 @@ class OrderItem {
 class Orders with ChangeNotifier {
   static const routeName = '/orders';
   List<OrderItem> _orders = [];
+  final String authToken;
+
+  Orders(this.authToken, this._orders);
 
   List<OrderItem> get orders {
     return [..._orders];
   }
 
   Future<void> fetchAndSetOrder() async {
-    const baseUrl =
-        'https://shopapp-b3123-default-rtdb.firebaseio.com/orders.json';
+    final baseUrl =
+        'https://shopapp-b3123-default-rtdb.firebaseio.com/orders.json?auth=${authToken}';
     Uri url = Uri.parse(baseUrl);
 
     final response = await http.get(url);
@@ -61,8 +61,8 @@ class Orders with ChangeNotifier {
   }
 
   Future<void> addOrder(List<CartItems> cartProducts, double total) async {
-    const baseUrl =
-        'https://shopapp-b3123-default-rtdb.firebaseio.com/orders.json';
+    final baseUrl =
+        'https://shopapp-b3123-default-rtdb.firebaseio.com/orders.json?auth=${authToken}';
     Uri url = Uri.parse(baseUrl);
 
     final timestamp = DateTime.now();

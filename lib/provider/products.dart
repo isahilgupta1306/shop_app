@@ -6,6 +6,10 @@ import 'dart:developer';
 import '../models/http_exception.dart';
 
 class Products with ChangeNotifier {
+  final String authToken;
+
+  Products(this.authToken, this._items);
+
   List<Product> _items = [
     // Product(
     //   id: 'p1',
@@ -55,8 +59,8 @@ class Products with ChangeNotifier {
   }
 
   Future<void> fetchAndSetProducts() async {
-    const baseUrl =
-        'https://shopapp-b3123-default-rtdb.firebaseio.com/products.json';
+    final baseUrl =
+        'https://shopapp-b3123-default-rtdb.firebaseio.com/products.json?auth=${authToken}';
     Uri url = Uri.parse(baseUrl);
     try {
       final response = await http.get(url);
@@ -85,8 +89,8 @@ class Products with ChangeNotifier {
   }
 
   Future<void> addProduct(Product product) async {
-    const baseUrl =
-        'https://shopapp-b3123-default-rtdb.firebaseio.com/products.json';
+    final baseUrl =
+        'https://shopapp-b3123-default-rtdb.firebaseio.com/products.json?auth=${authToken}';
     Uri url = Uri.parse(baseUrl);
     try {
       final response = await http.post(url,
@@ -114,7 +118,7 @@ class Products with ChangeNotifier {
 
   Future<void> updateProduct(String id, Product newProduct) async {
     String baseUrl =
-        'https://shopapp-b3123-default-rtdb.firebaseio.com/products/$id.json';
+        'https://shopapp-b3123-default-rtdb.firebaseio.com/products/$id.json?auth=${authToken}';
     Uri url = Uri.parse(baseUrl);
     final prodIndex = _items.indexWhere((prod) => prod.id == id);
     if (prodIndex >= 0) {
@@ -136,7 +140,7 @@ class Products with ChangeNotifier {
 
   Future<void> deleteProduct(String id) async {
     String baseUrl =
-        'https://shopapp-b3123-default-rtdb.firebaseio.com/products/$id.json';
+        'https://shopapp-b3123-default-rtdb.firebaseio.com/products/$id.json?auth=${authToken}';
     Uri url = Uri.parse(baseUrl);
     final existingProductIndex = _items.indexWhere((prod) => prod.id == id);
     var existingProduct = _items[existingProductIndex];
