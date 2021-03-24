@@ -7,8 +7,9 @@ import '../models/http_exception.dart';
 
 class Products with ChangeNotifier {
   final String authToken;
+  final String userId;
 
-  Products(this.authToken, this._items);
+  Products(this.authToken, this.userId, this._items);
 
   List<Product> _items = [
     // Product(
@@ -58,9 +59,11 @@ class Products with ChangeNotifier {
     return _items.where((prodItem) => prodItem.isFavorite).toList();
   }
 
-  Future<void> fetchAndSetProducts() async {
+  Future<void> fetchAndSetProducts([bool filterByUser = false]) async {
+    final filterString =
+        filterByUser ? 'orderBy"crearorId"&equalTo="$userId"' : '';
     final baseUrl =
-        'https://shopapp-b3123-default-rtdb.firebaseio.com/products.json?auth=${authToken}';
+        'https://shopapp-b3123-default-rtdb.firebaseio.com/products.json?auth=${authToken}&${filterString}';
     Uri url = Uri.parse(baseUrl);
     try {
       final response = await http.get(url);
@@ -100,6 +103,7 @@ class Products with ChangeNotifier {
             'imageUrl': product.imageUrl,
             'price': product.price,
             'isFavorite': product.isFavorite,
+            'creatorId': userId,
           }));
 
       final newProduct = Product(
@@ -128,6 +132,7 @@ class Products with ChangeNotifier {
             'description': newProduct.description,
             'imageUrl': newProduct.imageUrl,
             'price': newProduct.price,
+            //'creatorId': user
           }));
       _items[prodIndex] = newProduct;
       notifyListeners();
