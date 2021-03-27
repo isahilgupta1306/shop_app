@@ -17,6 +17,7 @@ import './screens/splash_screen.dart';
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
+  bool _visible = true;
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -54,10 +55,13 @@ class MyApp extends StatelessWidget {
                   TargetPlatform.iOS: CustomPageTransitionBuilder(),
                 })),
             //home: ProductOverviewScreen(),
+            //auth.tryAutoLogin()
             home: auth.isAuth
                 ? ProductOverviewScreen()
                 : FutureBuilder(
-                    future: auth.tryAutoLogin(),
+                    future: Future.delayed(const Duration(seconds: 4), () {
+                      auth.tryAutoLogin();
+                    }),
                     builder: (ctx, authResultSnapshot) =>
                         authResultSnapshot.connectionState ==
                                 ConnectionState.waiting
