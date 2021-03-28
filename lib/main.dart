@@ -59,7 +59,7 @@ class MyApp extends StatelessWidget {
             home: auth.isAuth
                 ? ProductOverviewScreen()
                 : FutureBuilder(
-                    future: Future.delayed(const Duration(seconds: 0), () {
+                    future: Future.delayed(const Duration(seconds: 4), () {
                       auth.tryAutoLogin();
                     }),
                     builder: (ctx, authResultSnapshot) =>
