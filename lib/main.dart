@@ -17,7 +17,7 @@ import './screens/splash_screen.dart';
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
-  bool _visible = true;
+  //bool _visible = true;
   @override
   Widget build(BuildContext context) {
     return MultiProvider(

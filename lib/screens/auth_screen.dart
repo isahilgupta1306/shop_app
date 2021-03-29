@@ -382,7 +382,7 @@ class _AuthCardState extends State<AuthCard>
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      elevation: 4,
+                      elevation: 2,
                       padding:
                           EdgeInsets.symmetric(horizontal: 30.0, vertical: 8.0),
                       color: Theme.of(context).primaryColor,
